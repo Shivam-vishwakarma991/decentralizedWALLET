@@ -2,35 +2,39 @@ import { useState } from "react";
 import "./Main.css";
 
 function SendEther({web3,account}) {
-  const [receipt, setreceipt]=useState({});
-  const [toggle,settoggle]= useState(false);
+  const [receipt, setReceipt] = useState({});
+  const [toggle, setToggle] = useState(false);
 
-  function Ethersend(event) {
-    
+  function ethersend(event) {
     event.preventDefault();
-    const _to= document.querySelector("#to").value;
-    const amnt= document.querySelector("#value").value;
-    const weivalue= web3.utils.toWei(amnt,"ether");
+    const _to = document.querySelector("#to").value;
+    const amnt = document.querySelector("#value").value;
+    const weivalue = web3.utils.toWei(amnt, "ether");
+    
     web3.eth.sendTransaction({
-      from:account,
+      from: account,
       to: _to,
       value: weivalue
-    }).then(function(receipt){
-      setreceipt(receipt);
-      settoggle(true);
-      // console.log(receipt)
+    }).then(function(receipt) {
+      setReceipt(receipt);
+      setToggle(true);
     })
   }
-    return (
+
+  function getEtherscanLink(txHash) {
+    return `https://sepolia.etherscan.io/tx/${txHash}`;
+  }
+
+  return (
     <>
-      <form className="box" onSubmit={Ethersend}>
+      <form className="box" onSubmit={ethersend}>
         <p style={{ marginTop: "50px" }} className="label">
-          <label style={{fontSize: "24px", fontWeight: "bold", textShadow: "2px 2px 4px #000"  }} htmlFor="">Enter Receiver's Address</label>
+          <label style={{ fontSize: "24px", fontWeight: "bold", textShadow: "2px 2px 4px #000" }} htmlFor="">Enter Receiver's Address</label>
           <input placeholder="Enter the address" className="receiver" type="text" id="to"></input>
         </p>
 
         <p className="label">
-          <label style={{fontSize: "24px", fontWeight: "bold", textShadow: "2px 2px 4px #000"  }} htmlFor="">Enter Amount to Send (Ether)</label>
+          <label style={{ fontSize: "24px", fontWeight: "bold", textShadow: "2px 2px 4px #000" }} htmlFor="">Enter Amount to Send (Ether)</label>
           <input placeholder="Enter Amount" className="receive" type="text" id="value"></input>
         </p>
         <button className="btn" type="submit">
@@ -40,7 +44,14 @@ function SendEther({web3,account}) {
       <div className="box">
         <pre className="json">
           <h3>Json Response</h3>
-          <code>{toggle &&JSON.stringify(receipt, ["transactionHash","blockHash", "blockNumber", "gasUsed"],2)}</code>
+          {toggle && (
+            <div>
+              <p>Transaction Hash (Click to see the transaction) <a href={getEtherscanLink(receipt.transactionHash)} target="_blank" rel="noopener noreferrer">{receipt.transactionHash}</a></p>
+              <p>Block Hash: {receipt.blockHash}</p>
+              <p>Block Number: {receipt.blockNumber}</p>
+              <p>Gas Used: {receipt.gasUsed}</p>
+            </div>
+          )}
         </pre>
       </div>
     </>
