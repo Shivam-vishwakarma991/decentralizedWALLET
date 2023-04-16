@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/decentralizedWALLET/static/css/main.74947bf3.css",
-    "main.js": "/decentralizedWALLET/static/js/main.31416866.js",
+    "main.js": "/decentralizedWALLET/static/js/main.e6569c40.js",
     "index.html": "/decentralizedWALLET/index.html",
     "main.74947bf3.css.map": "/decentralizedWALLET/static/css/main.74947bf3.css.map",
-    "main.31416866.js.map": "/decentralizedWALLET/static/js/main.31416866.js.map"
+    "main.e6569c40.js.map": "/decentralizedWALLET/static/js/main.e6569c40.js.map"
   },
   "entrypoints": [
     "static/css/main.74947bf3.css",
-    "static/js/main.31416866.js"
+    "static/js/main.e6569c40.js"
   ]
 }
